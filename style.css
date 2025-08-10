@@ -1,0 +1,109 @@
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    font-family: "Quicksand", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+}
+
+.wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    min-height: 100vh;
+    background: linear-gradient(to top, rgba(86, 39, 255, 0.158), rgba(252, 236, 248, 0.493) 50%);
+}
+
+.title {
+    font-size: 2.5em;
+    color: rgb(191, 36, 238);
+    font-weight: 300;
+}
+
+.searchbar-wrapper {
+    max-width: 80vw;
+}
+
+.searchbar-wrapper__input {
+    width: 400px;
+    height: 40px;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 4px 4px 10px rgba(230, 186, 255, 0.541),
+                -4px -4px 15px white;
+    padding: 0 10px;
+    margin-right: 10px;
+    transition: all 0.3s ease-in-out;
+    color: rgb(225, 124, 255);
+}
+.searchbar-wrapper__input::placeholder {
+    color: rgb(238, 181, 255);
+}
+
+.searchbar-wrapper__input:focus {
+    outline: none;
+    box-shadow: 4px 4px 10px rgba(225, 174, 255, 0.836),
+                -4px -4px 15px white;
+}
+
+.searchbar-wrapper__button {
+    height: 40px;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 4px 4px 10px rgba(230, 186, 255, 0.541),
+                -4px -4px 15px white;
+    padding: 0 10px;
+    background-color: rgb(225, 124, 255);
+    color: rgb(247, 228, 253);
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.searchbar-wrapper__button:hover {
+    box-shadow: 2px 2px 5px rgba(225, 174, 255, 0.945),
+                -2px -2px 10px white;
+    background-color: rgba(224, 124, 255, 0.555);
+}
+
+
+.table {
+    margin: 4em 0 20px 0;
+    width: auto;
+    border: none;
+    box-shadow: 4px 4px 10px rgba(230, 186, 255, 0.37),
+            -4px -4px 15px white;
+    border-collapse: collapse; 
+}
+
+
+.table caption {
+    margin: 15px 0;
+    font-size: 1.2em;
+    font-weight: normal !important;
+    color: rgb(191, 36, 238);
+}
+.table th:first-child {
+    border-top-left-radius: 8px;
+}
+
+.table th:last-child {
+    border-top-right-radius: 8px;
+}
+.table th,
+.table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    
+}
+
+.table th {
+    background-color: rgba(225, 124, 255, 0.555);
+    color: white;
+}
+
+.table td {
+    background-color: rgba(255, 249, 253, 0.342);
+}
