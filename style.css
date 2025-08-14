@@ -107,3 +107,18 @@ body {
 .table td {
     background-color: rgba(255, 249, 253, 0.342);
 }
+
+
+.error-message-container {
+    margin-top: 2em;
+}
+
+.error-message {
+    color: red;
+    font-size: .8em;
+    font-weight: bold;
+    text-align: center;
+    padding: 10px;
+    background-color: rgba(255, 200, 200, 0.5);
+    border-radius: 8px;
+}

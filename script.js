@@ -100,11 +100,38 @@ class HeartData {
 
 }
 
+const US_STATE_ABBR = [
+  "AL","AK","AZ","AR","CA","CO","CT","DE","FL","GA",
+  "HI","ID","IL","IN","IA","KS","KY","LA","ME","MD",
+  "MA","MI","MN","MS","MO","MT","NE","NV","NH","NJ",
+  "NM","NY","NC","ND","OH","OK","OR","PA","RI","SC",
+  "SD","TN","TX","UT","VT","VA","WA","WV","WI","WY"
+];
 const wrapper = document.querySelector(".wrapper");
-const table = document.querySelector(".table");
+const table = wrapper.querySelector(".table");
+const searchBar = wrapper.querySelector(".searchbar-wrapper__input");
+const searchBtn = wrapper.querySelector(".searchbar-wrapper__button");
 
 
-function getHeartData() {
+function printErrorMessage(message) {
+  const errorMessageContainer = wrapper.querySelector(".error-message-container");
+  errorMessageContainer.innerHTML = `<p class="error-message">${message}</p>`;
+}
+
+function search(value) {
+
+  if (US_STATE_ABBR.includes(value.toUpperCase())) 
+  {
+    getHeartData(value);
+
+  } else {
+    printErrorMessage("Please enter a valid US state abbreviation (e.g., CA, NY, TX).");
+  }
+  console.log(value)
+}
+
+
+function getHeartData(value) {
 let heartData = "";
 
 
@@ -118,13 +145,12 @@ fetch("https://data.cdc.gov/api/views/55yu-xksw/rows.json?accessType=DOWNLOAD")
   })
   .then(data => {
     heartData = data;
-    // console.log(heartData.data);
 
     let resultList = []
 
 
 
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 20; i++) {
       // console.log(heartData.data[i]);
         let heartDataObj = new HeartData();
 
@@ -181,9 +207,12 @@ fetch("https://data.cdc.gov/api/views/55yu-xksw/rows.json?accessType=DOWNLOAD")
 
 
     for (let i = 0; i < resultList.length; i++) {
-      console.log(resultList[i]);
+
+      if (resultList[i].stateAbbr.includes(value.toUpperCase())) {
         let newRow = resultList[i].generateTableRow();
         table.insertAdjacentHTML("beforeend", newRow);
+      }
+
     }
   })
   .catch(error => {
@@ -191,8 +220,99 @@ fetch("https://data.cdc.gov/api/views/55yu-xksw/rows.json?accessType=DOWNLOAD")
   });
 };
 
+// function getHeartData() {
+// let heartData = "";
 
-  
 
-getHeartData()
+// // Connect to API using Fetch API
+// fetch("https://data.cdc.gov/api/views/55yu-xksw/rows.json?accessType=DOWNLOAD")
+//   .then(response => {
+//     if (!response.ok) {
+//       throw new Error("Network response was not ok: " + response.status);
+//     }
+//     return response.json();
+//   })
+//   .then(data => {
+//     heartData = data;
+//     // console.log(heartData.data);
 
+//     let resultList = []
+
+
+
+//     for (let i = 0; i < 10; i++) {
+//       // console.log(heartData.data[i]);
+//         let heartDataObj = new HeartData();
+
+//         // console.log(heartData.data[i]);
+
+//         for (let j = 8; j < heartData.data[i].length; j++) {
+
+
+//             // Set properties based on the index
+//             switch(j) {
+//                 case 8:
+//                     heartDataObj.date = heartData.data[i][j];
+//                     break;
+//                 case 9:
+//                     heartDataObj.stateAbbr = heartData.data[i][j];
+//                     break;
+//                 case 10:
+//                     heartDataObj.cityName = heartData.data[i][j];
+//                     break;
+//                 case 11:
+//                     heartDataObj.regionType = heartData.data[i][j];
+//                     break;
+//                 case 15:
+//                     heartDataObj.deathRate = heartData.data[i][j] ? heartData.data[i][j] : "Unknown";
+
+//                     break;
+//                 case 16:
+//                     heartDataObj.deathRatePer100k = heartData.data[i][j] ? heartData.data[i][j] : "Unknown";
+//                     break;
+//                 case 21:
+//                     heartDataObj.sex = heartData.data[i][j];
+//                     break;
+//                 case 23:
+//                     heartDataObj.race = heartData.data[i][j];
+//                     break;
+//             }
+
+//             // Filter only the needed data
+//             if (j == 11) {
+//                 j += 3;
+//             } else if (j == 16) {
+//                 j += 4;
+//             } else if (j == 21) {
+//                 j += 1;
+//             } else if (j == 23) {
+//                 j += 7;
+//             }
+//         }
+
+//         resultList.push(heartDataObj);
+
+
+//     }
+
+
+//     for (let i = 0; i < resultList.length; i++) {
+//         let newRow = resultList[i].generateTableRow();
+//         table.insertAdjacentHTML("beforeend", newRow);
+//     }
+//   })
+//   .catch(error => {
+//     console.error("Fetch error:", error);
+//   });
+// };
+
+
+searchBar.addEventListener("keypress", (e) => {
+  if (e.key === "Enter") {
+    search(searchBar.value);
+  }
+});
+
+searchBtn.addEventListener("click", (e) => {
+  search(searchBar.value);
+})
