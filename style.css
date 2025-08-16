@@ -122,3 +122,27 @@ body {
     background-color: rgba(255, 200, 200, 0.5);
     border-radius: 8px;
 }
+
+
+.filter-options {
+    justify-content: center;
+}
+
+.filter-options__list {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    justify-content: end;
+}
+
+.filter-options__list-item {
+    margin: 0 10px;
+    font-size: .8em;
+}
+
+.filter-options__list-item a {
+    text-decoration: none;
+    color: rgb(191, 36, 238);
+    transition: color 0.3s ease-in-out;
+}
