@@ -113,6 +113,9 @@ const searchBar = wrapper.querySelector(".searchbar-wrapper__input");
 const searchBtn = wrapper.querySelector(".searchbar-wrapper__button");
 const alphabeticalOrderBtn = wrapper.querySelector("#alphabetical-order");
 const genderDropdownLIs = wrapper.querySelectorAll(".dropdown-list__list-item");
+const deathRateBtn = wrapper.querySelector(".filter-options__list-item:nth-child(3)");
+
+
 
 
 
@@ -140,6 +143,14 @@ function insertRow(listItem) {
 
 function sortByCityName(list) {
   return list.sort((a, b) => a.cityName.localeCompare(b.cityName));
+}
+
+function sortByDeathRate(list) {
+  return list.sort((a, b) => {
+    const rateA = isNaN(Number(a.deathRate)) ? Number.NEGATIVE_INFINITY : Number(a.deathRate);
+    const rateB = isNaN(Number(b.deathRate)) ? Number.NEGATIVE_INFINITY : Number(b.deathRate);
+    return rateB - rateA;
+  });
 }
 
 function filterByGender(gender) {
@@ -251,7 +262,7 @@ fetch("https://data.cdc.gov/api/views/55yu-xksw/rows.json?accessType=DOWNLOAD")
     }
 
 
-    let resultLimiter = 10;
+    let resultLimiter = 15;
     for (let i = 0; i < resultList.length; i++) {
 
       if (resultList[i].stateAbbr.includes(value.toUpperCase()) && resultLimiter > 0) {
@@ -342,4 +353,19 @@ for (let i = 0; i < genderDropdownLIs.length; i++) {
   });
 }
 
-//当按性别筛选时，会出现问题。。。
+// Add a click event listener to the death rate button
+
+deathRateBtn.addEventListener("click", (e) => {
+  const existingRows = getExistingTableRows();
+
+  // Sort the existing rows by death rate
+  const sortedList = sortByDeathRate(existingRows);
+
+  // Clear the table before inserting new rows
+  clearTable();
+
+  // Insert the sorted rows into the table
+  for (let i = 0; i < sortedList.length; i++) {
+    insertRow(sortedList[i]);
+  }
+});
