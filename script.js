@@ -112,6 +112,8 @@ const table = wrapper.querySelector(".table tbody");
 const searchBar = wrapper.querySelector(".searchbar-wrapper__input");
 const searchBtn = wrapper.querySelector(".searchbar-wrapper__button");
 const alphabeticalOrderBtn = wrapper.querySelector("#alphabetical-order");
+const genderDropdownLIs = wrapper.querySelectorAll(".dropdown-list__list-item");
+
 
 
 function printErrorMessage(message) {
@@ -138,6 +140,24 @@ function insertRow(listItem) {
 
 function sortByCityName(list) {
   return list.sort((a, b) => a.cityName.localeCompare(b.cityName));
+}
+
+function filterByGender(gender) {
+  const existingRows = getExistingTableRows();
+    switch(gender) {
+      case "Male":
+        console.log("M");
+        return existingRows.filter(item => item.sex === "Male");
+        break;
+      case "Female":
+        console.log("F");
+        return existingRows.filter(item => item.sex === "Female");
+        break;
+      case "Overall":
+        console.log("O"); 
+        return existingRows.filter(item => item.sex === "Overall");
+        break;
+  }
 }
 
 
@@ -248,22 +268,7 @@ fetch("https://data.cdc.gov/api/views/55yu-xksw/rows.json?accessType=DOWNLOAD")
 
 
 
-
-
-
-searchBar.addEventListener("keypress", (e) => {
-  if (e.key === "Enter") {
-    search(searchBar.value);
-  }
-});
-
-searchBtn.addEventListener("click", (e) => {
-  search(searchBar.value);
-})
-
-
-// Get the 
-alphabeticalOrderBtn.addEventListener("click", (e) => {
+function getExistingTableRows() {
   let cityNames = [];
   const existingRows = table.querySelectorAll("tr");
 
@@ -286,11 +291,55 @@ alphabeticalOrderBtn.addEventListener("click", (e) => {
     }
   }
 
-  sortByCityName(cityNames);
+  return cityNames;
+}
+
+
+searchBar.addEventListener("keypress", (e) => {
+  if (e.key === "Enter") {
+    search(searchBar.value);
+  }
+});
+
+searchBtn.addEventListener("click", (e) => {
+  search(searchBar.value);
+})
+
+
+// Get the 
+alphabeticalOrderBtn.addEventListener("click", (e) => {
+  const existingRows = getExistingTableRows();
+
+  sortByCityName(existingRows);
 
   clearTable();
 
-  for (let i = 0; i < cityNames.length; i++) {
-    insertRow(cityNames[i]);
+  for (let i = 0; i < existingRows.length; i++) {
+    insertRow(existingRows[i]);
   }
 });
+
+
+//编程那个dropdown的功能
+
+
+// Loop through all of the dropdown list items
+for (let i = 0; i < genderDropdownLIs.length; i++) {
+
+  // Add a click event listener to each dropdown list item
+  genderDropdownLIs[i].addEventListener("click", (e) => {
+
+    // Filter the existing rows based on the gender
+    const filteredList = filterByGender(e.target.textContent);
+
+    // Clear the table before inserting new rows
+    clearTable();
+
+    // Insert the filtered rows into the table
+    for (let i = 0; i < filteredList.length; i++) {
+      insertRow(filteredList[i]);
+    }
+  });
+}
+
+//当按性别筛选时，会出现问题。。。
