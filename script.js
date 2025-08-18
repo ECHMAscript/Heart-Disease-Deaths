@@ -108,7 +108,7 @@ const US_STATE_ABBR = [
   "SD","TN","TX","UT","VT","VA","WA","WV","WI","WY"
 ];
 const wrapper = document.querySelector(".wrapper");
-const table = wrapper.querySelector(".table");
+const table = wrapper.querySelector(".table tbody");
 const searchBar = wrapper.querySelector(".searchbar-wrapper__input");
 const searchBtn = wrapper.querySelector(".searchbar-wrapper__button");
 const alphabeticalOrderBtn = wrapper.querySelector("#alphabetical-order");
@@ -127,10 +127,13 @@ function removeErrorMessage() {
 function clearTable() {
   const rows = table.querySelectorAll("tr");
   rows.forEach(row => {
-    if (row !== table.querySelector("tr:first-child")) { // Keep the header row
-      row.remove();
-    }
+  row.remove();
   });
+}
+
+function insertRow(listItem) {
+    let newRow = listItem.generateTableRow();
+    table.insertAdjacentHTML("beforeend", newRow);
 }
 
 function sortByCityName(list) {
@@ -171,8 +174,6 @@ fetch("https://data.cdc.gov/api/views/55yu-xksw/rows.json?accessType=DOWNLOAD")
     heartData = data;
 
     let resultList = []
-
-
 
     for (let i = 0; i < heartData.data.length; i++) {
       // console.log(heartData.data[i]);
@@ -234,10 +235,8 @@ fetch("https://data.cdc.gov/api/views/55yu-xksw/rows.json?accessType=DOWNLOAD")
     for (let i = 0; i < resultList.length; i++) {
 
       if (resultList[i].stateAbbr.includes(value.toUpperCase()) && resultLimiter > 0) {
-        let newRow = resultList[i].generateTableRow();
-        table.insertAdjacentHTML("beforeend", newRow);
+        insertRow(resultList[i]);
         resultLimiter--;
-        console.log(resultList[i]);
       }
 
     }
@@ -262,9 +261,36 @@ searchBtn.addEventListener("click", (e) => {
   search(searchBar.value);
 })
 
-alphabeticalOrderBtn.addEventListener("click", (e) => {
-  console.log("Sorting by city name...");
-  const existingRows = table.querySelectorAll("tr -");
 
-  // This part is still not finished.... Need to implement sorting logic
+// Get the 
+alphabeticalOrderBtn.addEventListener("click", (e) => {
+  let cityNames = [];
+  const existingRows = table.querySelectorAll("tr");
+
+  
+  for (let i = 0; i < existingRows.length; i++) {
+      const tds = existingRows[i].querySelectorAll("td");
+
+    // Bind the data to the HeartData object
+    if (tds.length === 8) { // Ensure all columns are present
+      let heartDataObj = new HeartData();
+      heartDataObj.date = tds[0].textContent;
+      heartDataObj.stateAbbr = tds[1].textContent;
+      heartDataObj.cityName = tds[2].textContent;
+      heartDataObj.regionType = tds[3].textContent;
+      heartDataObj.deathRate = tds[4].textContent;
+      heartDataObj.deathRatePer100k = tds[5].textContent;
+      heartDataObj.sex = tds[6].textContent;
+      heartDataObj.race = tds[7].textContent;
+      cityNames.push(heartDataObj);
+    }
+  }
+
+  sortByCityName(cityNames);
+
+  clearTable();
+
+  for (let i = 0; i < cityNames.length; i++) {
+    insertRow(cityNames[i]);
+  }
 });
