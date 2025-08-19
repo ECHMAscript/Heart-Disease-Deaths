@@ -369,3 +369,15 @@ deathRateBtn.addEventListener("click", (e) => {
     insertRow(sortedList[i]);
   }
 });
+
+
+// const map = L.map('map').setView([39.8283, -98.5795], 4 /* Centered on the USA */);
+// L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+//     maxZoom: 19,
+//     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+// }).addTo(map);
+
+// L.marker([40.7128, -74.0060]).addTo(map)
+//   .bindPopup('4.5 million').openPopup();
+
+// console.log(map);
