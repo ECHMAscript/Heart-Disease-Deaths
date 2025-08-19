@@ -343,3 +343,14 @@ for (let i = 0; i < genderDropdownLIs.length; i++) {
 }
 
 //当按性别筛选时，会出现问题。。。
+
+// 编程那个map的功能
+
+// const map = L.map('map').setView([39.8283, -98.5795], 4 /* Centered on the USA */);
+// L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+//     maxZoom: 19,
+//     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+// }).addTo(map);
+
+// L.marker([40.7128, -74.0060]).addTo(map)
+//   .bindPopup('4.5 million').openPopup();
