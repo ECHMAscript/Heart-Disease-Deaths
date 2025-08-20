@@ -116,7 +116,12 @@ const genderDropdownLIs = wrapper.querySelectorAll(".dropdown-list__list-item");
 const deathRateBtn = wrapper.querySelector(".filter-options__list-item:nth-child(3)");
 
 
-
+function addPins(stateData) {
+    stateData.forEach(state => {
+        L.marker([state.coords[0], state.coords[1]]).addTo(map)
+                .bindPopup(`<b>${state.name}</b><br>4.5 million`).openPopup();
+    });
+}
 
 
 function printErrorMessage(message) {
@@ -371,13 +376,74 @@ deathRateBtn.addEventListener("click", (e) => {
 });
 
 
-// const map = L.map('map').setView([39.8283, -98.5795], 4 /* Centered on the USA */);
-// L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-//     maxZoom: 19,
-//     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-// }).addTo(map);
+// 编程地图的功能
+const states = [
+  { name: "Alabama", coords: [32.806671, -86.791130] },
+  { name: "Alaska", coords: [61.370716, -152.404419] },
+  { name: "Arizona", coords: [33.729759, -111.431221] },
+  { name: "Arkansas", coords: [34.969704, -92.373123] },
+  { name: "California", coords: [36.116203, -119.681564] },
+  { name: "Colorado", coords: [39.059811, -105.311104] },
+  { name: "Connecticut", coords: [41.597782, -72.755371] },
+  { name: "Delaware", coords: [39.318523, -75.507141] },
+  { name: "Florida", coords: [27.766279, -81.686783] },
+  { name: "Georgia", coords: [33.040619, -83.643074] },
+  { name: "Hawaii", coords: [21.094318, -157.498337] },
+  { name: "Idaho", coords: [44.240459, -114.478828] },
+  { name: "Illinois", coords: [40.349457, -88.986137] },
+  { name: "Indiana", coords: [39.849426, -86.258278] },
+  { name: "Iowa", coords: [42.011539, -93.210526] },
+  { name: "Kansas", coords: [38.526600, -96.726486] },
+  { name: "Kentucky", coords: [37.668140, -84.670067] },
+  { name: "Louisiana", coords: [31.169546, -91.867805] },
+  { name: "Maine", coords: [44.693947, -69.381927] },
+  { name: "Maryland", coords: [39.063946, -76.802101] },
+  { name: "Massachusetts", coords: [42.230171, -71.530106] },
+  { name: "Michigan", coords: [43.326618, -84.536095] },
+  { name: "Minnesota", coords: [45.694454, -93.900192] },
+  { name: "Mississippi", coords: [32.741646, -89.678696] },
+  { name: "Missouri", coords: [38.456085, -92.288368] },
+  { name: "Montana", coords: [46.921925, -110.454353] },
+  { name: "Nebraska", coords: [41.125370, -98.268082] },
+  { name: "Nevada", coords: [38.313515, -117.055374] },
+  { name: "New Hampshire", coords: [43.452492, -71.563896] },
+  { name: "New Jersey", coords: [40.298904, -74.521011] },
+  { name: "New Mexico", coords: [34.840515, -106.248482] },
+  { name: "New York", coords: [42.165726, -74.948051] },
+  { name: "North Carolina", coords: [35.630066, -79.806419] },
+  { name: "North Dakota", coords: [47.528912, -99.784012] },
+  { name: "Ohio", coords: [40.388783, -82.764915] },
+  { name: "Oklahoma", coords: [35.565342, -96.928917] },
+  { name: "Oregon", coords: [44.572021, -122.070938] },
+  { name: "Pennsylvania", coords: [40.590752, -77.209755] },
+  { name: "Rhode Island", coords: [41.680893, -71.511780] },
+  { name: "South Carolina", coords: [33.856892, -80.945007] },
+  { name: "South Dakota", coords: [44.299782, -99.438828] },
+  { name: "Tennessee", coords: [35.747845, -86.692345] },
+  { name: "Texas", coords: [31.054487, -97.563461] },
+  { name: "Utah", coords: [40.150032, -111.862434] },
+  { name: "Vermont", coords: [44.045876, -72.710686] },
+  { name: "Virginia", coords: [37.769337, -78.169968] },
+  { name: "Washington", coords: [47.400902, -121.490494] },
+  { name: "West Virginia", coords: [38.491226, -80.954456] },
+  { name: "Wisconsin", coords: [44.268543, -89.616508] },
+  { name: "Wyoming", coords: [42.755966, -107.302490] },
+  { name: "District of Columbia", coords: [38.897438, -77.026817] }
+];
 
-// L.marker([40.7128, -74.0060]).addTo(map)
-//   .bindPopup('4.5 million').openPopup();
 
-// console.log(map);
+const map = L.map('map', {
+    zoomControl: false,
+    scrollWheelZoom: false,
+    touchZoom: false,
+    doubleClickZoom: false,
+    dragging: false
+}).setView([39.8283, -98.5795], 4);
+
+
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+}).addTo(map);
+
+// addPins(states);

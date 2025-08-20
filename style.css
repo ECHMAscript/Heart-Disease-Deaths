@@ -191,3 +191,24 @@ body {
     background-color: rgba(191, 36, 238, 0.285);
     color: rgb(238, 182, 255);
 }
+
+/* Map Styles */
+
+.map-wrapper {
+    max-width: 80vw;
+    height: 500px;
+    width: 50%;
+    border: 2px solid red;
+    max-height: 600px;
+}
+
+#map {
+    width: 100%;
+    height: 400px;
+    overflow: hidden;
+    border: 1px solid rgba(191, 36, 238, 0.211);;
+    border-radius: 6px;
+    box-shadow: 4px 4px 10px rgba(230, 186, 255, 0.541),
+                -4px -4px 15px white;
+
+}
