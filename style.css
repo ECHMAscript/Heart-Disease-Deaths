@@ -16,6 +16,37 @@ body {
     background: linear-gradient(to top, rgba(86, 39, 255, 0.158), rgba(252, 236, 248, 0.493) 50%);
 }
 
+.navbar {
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: rgb(191, 36, 238);
+    /* border-bottom: 2px solid red; */
+    margin-bottom: 2em;
+}
+
+.navbar__logo {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+
+.navbar__navlist {
+    list-style: none;
+    display: flex;
+}
+
+.navbar__navlist li {
+    margin: 0 10px;
+}
+
+.navbar__navlist li a {
+    text-decoration: none;
+    font-weight: bold;
+    color: rgb(191, 36, 238);
+}
+
 .title {
     font-size: 2.5em;
     color: rgb(191, 36, 238);
@@ -196,17 +227,23 @@ body {
 
 .map-wrapper {
     max-width: 80vw;
-    height: 500px;
-    width: 50%;
-    border: 2px solid red;
-    max-height: 600px;
+    height: auto;
+    width: 60%;
+    /* border: 2px solid red; */
+
+}
+
+.map__title {
+    color: rgb(191, 36, 238);
+    font-weight: normal;
+    font-size: 1.2em;
 }
 
 #map {
     width: 100%;
     height: 400px;
     overflow: hidden;
-    border: 1px solid rgba(191, 36, 238, 0.211);;
+    /* border: 1px solid rgba(191, 36, 238, 0.211);; */
     border-radius: 6px;
     box-shadow: 4px 4px 10px rgba(230, 186, 255, 0.541),
                 -4px -4px 15px white;

@@ -117,9 +117,32 @@ const deathRateBtn = wrapper.querySelector(".filter-options__list-item:nth-child
 
 
 function addPins(stateData) {
+
+  const purpleIcon = new L.Icon({
+  iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-violet.png',
+  shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41]
+});
+
     stateData.forEach(state => {
-        L.marker([state.coords[0], state.coords[1]]).addTo(map)
-                .bindPopup(`<b>${state.name}</b><br>4.5 million`).openPopup();
+        L.marker([state.coords[0], state.coords[1]],{
+          icon: purpleIcon // fill color
+        }).addTo(map)
+                .bindPopup(`<b>${state.name}</b><br>4.5 million`);
+    });
+}
+
+function addCircle(stateData) {
+      stateData.forEach(state => {
+          L.circleMarker([state.coords[0], state.coords[1]], {
+            radius: 8,
+            color: 'none',       // border color
+            fillColor: 'rgb(191, 36, 238)',  // fill color
+            fillOpacity: 0.8
+          }).addTo(map).bindPopup("I'm a red circle!");
     });
 }
 
@@ -446,4 +469,7 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 }).addTo(map);
 
-// addPins(states);
+addPins(states);
+
+// addCircle(states);
+
